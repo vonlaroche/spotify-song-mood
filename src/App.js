@@ -1,26 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as Actions from './actions'
 import './App.css';
 
-function App() {
+const App = props => {
+
+  const onChangeSatusClick = () => props.actions.startTest()
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     App
+     <br/>
+     {props.testStore.status}
+     <br/>
+     <button onClick={onChangeSatusClick}> Change status </button>
     </div>
   );
 }
 
-export default App;
+export default connect(
+  state => ({
+   testStore: state.testStore
+  }),
+  dispatch => ({
+    actions: bindActionCreators(Actions, dispatch),
+  })
+)(App)
